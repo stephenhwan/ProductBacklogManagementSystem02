@@ -1,6 +1,6 @@
 const { InvalidCredentialsError } = require('../../../../../domain/errors/domainError')
 
-class LoginCommand {
+class loginCommand {
   constructor({ email, password }) {
     this.email = email
     this.password = password

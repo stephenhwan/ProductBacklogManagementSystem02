@@ -18,7 +18,7 @@ async function onLogout() {
 
       <div class="d-flex align-items-center ms-auto gap-3">
         <span v-if="authStore.user" class="text-light small">
-          Xin chào, <strong>{{ authStore.user.name }}</strong>
+          Xin chào, <strong>{{ authStore.user.fullName }}</strong>
         </span>
         <button type="button" class="btn btn-outline-light btn-sm" @click="onLogout">
           Đăng xuất

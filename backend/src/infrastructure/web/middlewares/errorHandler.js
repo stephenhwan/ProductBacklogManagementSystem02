@@ -16,7 +16,7 @@ function errorHandler(err, req, res, next) {
     return res.status(401).json({ message: err.message })
   }
 
-  if (err instanceof DomainError) {
+  if (err instanceof domainError) {
     return res.status(400).json({ message: err.message })
   }
 

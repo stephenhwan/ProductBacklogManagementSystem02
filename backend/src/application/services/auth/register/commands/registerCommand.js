@@ -1,10 +1,10 @@
-const User = require('../../../../domain/entities/User')
-const { EmailAlreadyExistsError } = require('../../../../domain/errors/domainError')
+const User = require('../../../../../domain/entities/User')
+const { EmailAlreadyExistsError } = require('../../../../../domain/errors/domainError')
 
 /**
  * RegisterCommand - chỉ chứa dữ liệu đầu vào, không có logic.
  */
-class RegisterCommand {
+class registerCommand {
   constructor({ fullName, email, password }) {
     this.fullName = fullName
     this.email = email
@@ -28,7 +28,7 @@ class registerHandler {
     this.tokenService = tokenService
   }
 
-  /** @param {RegisterCommand} command */
+  /** @param {registerCommand} command */
   async execute(command) {
     const existing = await this.userRepository.findByEmail(command.email)
     if (existing) {
@@ -55,4 +55,4 @@ class registerHandler {
   }
 }
 
-module.exports = { RegisterCommand, RegisterHandler }
+module.exports = { registerCommand, registerHandler }

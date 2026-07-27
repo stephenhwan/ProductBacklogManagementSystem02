@@ -1,4 +1,4 @@
-const { registerCommand } = require('../../application/services/auth/login/commands/registerCommand')
+const { registerCommand } = require('../../application/services/auth/register/commands/registerCommand')
 const { loginCommand } = require('../../application/services/auth/login/commands/loginCommand')
 const { getCurrentUserQuery } = require('../../application/services/auth/currentUser/queries/getCurrentUserQuery')
 const { domainError } = require('../../domain/errors/domainError')

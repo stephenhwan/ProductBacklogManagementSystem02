@@ -31,7 +31,7 @@ async function onSubmit() {
 
   submitting.value = true
   const ok = await authStore.register({
-    name: form.name,
+    fullName: form.name,
     email: form.email,
     password: form.password,
   })

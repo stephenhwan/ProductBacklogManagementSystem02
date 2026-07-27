@@ -11,7 +11,7 @@ class EmailAlreadyExistsError extends domainError {
   }
 }
 
-class InvalidCredentialsError extends DomainError {
+class InvalidCredentialsError extends domainError {
   constructor() {
     super('Email hoặc mật khẩu không đúng.')
   }

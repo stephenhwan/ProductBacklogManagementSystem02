@@ -22,17 +22,17 @@ async function createApp() {
   await connectDB(process.env.MONGO_URI)
 
   // ---- Ráp infrastructure ----
-  const userRepository = new MongoUserRepository()
+  const userRepository = new mongoUserRepository()
   const passwordHasher = new BcryptPasswordHasher()
   const tokenService = new JwtTokenService(process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN || '2h')
 
   // ---- Ráp application handlers ----
-  const registerHandler = new registerHandler(userRepository, passwordHasher, tokenService)
-  const loginHandler = new loginHandler(userRepository, passwordHasher, tokenService)
-  const getCurrentUserHandler = new getCurrentUserHandler(userRepository)
+  const RegisterHandler = new registerHandler(userRepository, passwordHasher, tokenService)
+  const LoginHandler = new loginHandler(userRepository, passwordHasher, tokenService)
+  const GetCurrentUserHandler = new getCurrentUserHandler(userRepository)
 
   // ---- Ráp adapters ----
-  const authController = new authController(registerHandler, loginHandler, getCurrentUserHandler)
+  const AuthController = new authController(RegisterHandler, LoginHandler, GetCurrentUserHandler)
   const authMiddlewareInstance = authMiddleware(tokenService)
 
   // ---- Express app ----
@@ -40,7 +40,7 @@ async function createApp() {
   app.use(cors({ origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173' }))
   app.use(express.json())
 
-  app.use('/api/auth', createAuthRoutes(authController, authMiddlewareInstance))
+  app.use('/api/auth', createAuthRoutes(AuthController, authMiddlewareInstance))
 
   app.use(errorHandler) // luôn đặt cuối cùng
 
