@@ -1,6 +1,6 @@
 const { registerCommand } = require('../../application/services/auth/login/commands/registerCommand')
 const { loginCommand } = require('../../application/services/auth/login/commands/loginCommand')
-const { getCurrentUserQuery } = require('../../application/services/auth/login/queries/GetCurrentUserQuery')
+const { getCurrentUserQuery } = require('../../application/services/auth/currentUser/queries/getCurrentUserQuery')
 const { domainError } = require('../../domain/errors/domainError')
 
 class authController {

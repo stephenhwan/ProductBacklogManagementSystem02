@@ -5,13 +5,13 @@ const cors = require('cors')
 // domain/application đều được "ráp" ở đây — đây là nơi duy nhất trong app
 // biết tới TẤT CẢ các lớp (Mongo, bcrypt, jwt, Express).
 const connectDB = require('../database/db')
-const MongoUserRepository = require('../../adapters/repositories/mongoUserRepository')
+const mongoUserRepository = require('../../adapters/repositories/mongoUserRepository')
 const BcryptPasswordHasher = require('../security/BcryptPasswordHasher')
 const JwtTokenService = require('../security/JwtTokenService')
 
-const { RegisterHandler } = require('../../application/services/auth/commands/registerCommand')
-const { LoginHandler } = require('../../application/services/auth/commands/loginCommand')
-const { GetCurrentUserHandler } = require('../../application/services/auth/queries/GetCurrentUserQuery')
+const { registerHandler } = require('../../application/services/auth/register/commands/registerCommand')
+const { loginHandler } = require('../../application/services/auth/login/commands/loginCommand')
+const { getCurrentUserHandler } = require('../../application/services/auth/currentUser/queries/getCurrentUserQuery')
 
 const authController = require('../../adapters/controllers/authController')
 const authMiddleware = require('./middlewares/authMiddleware')
@@ -27,9 +27,9 @@ async function createApp() {
   const tokenService = new JwtTokenService(process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN || '2h')
 
   // ---- Ráp application handlers ----
-  const registerHandler = new RegisterHandler(userRepository, passwordHasher, tokenService)
-  const loginHandler = new LoginHandler(userRepository, passwordHasher, tokenService)
-  const getCurrentUserHandler = new GetCurrentUserHandler(userRepository)
+  const registerHandler = new registerHandler(userRepository, passwordHasher, tokenService)
+  const loginHandler = new loginHandler(userRepository, passwordHasher, tokenService)
+  const getCurrentUserHandler = new getCurrentUserHandler(userRepository)
 
   // ---- Ráp adapters ----
   const authController = new authController(registerHandler, loginHandler, getCurrentUserHandler)
