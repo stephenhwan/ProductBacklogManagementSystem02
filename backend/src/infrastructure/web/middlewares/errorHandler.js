@@ -1,4 +1,4 @@
-const { DomainError, EmailAlreadyExistsError, InvalidCredentialsError } = require('../../../domain/errors/domainError')
+const { domainError, EmailAlreadyExistsError, InvalidCredentialsError } = require('../../../domain/errors/domainError')
 
 /**
  * Middleware xử lý lỗi tập trung (đặt cuối cùng trong app.js).

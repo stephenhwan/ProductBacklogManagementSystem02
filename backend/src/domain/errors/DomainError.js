@@ -1,11 +1,11 @@
-class DomainError extends Error {
+class domainError extends Error {
   constructor(message) {
     super(message)
     this.name = this.constructor.name
   }
 }
 
-class EmailAlreadyExistsError extends DomainError {
+class EmailAlreadyExistsError extends domainError {
   constructor(email) {
     super(`Email "${email}" đã được sử dụng.`)
   }
@@ -17,4 +17,4 @@ class InvalidCredentialsError extends DomainError {
   }
 }
 
-module.exports = { DomainError, EmailAlreadyExistsError, InvalidCredentialsError }
+module.exports = { domainError, EmailAlreadyExistsError, InvalidCredentialsError }

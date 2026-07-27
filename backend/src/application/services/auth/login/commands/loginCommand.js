@@ -40,4 +40,4 @@ class loginHandler {
   }
 }
 
-module.exports = { LoginCommand, LoginHandler }
+module.exports = { loginCommand, loginHandler }
