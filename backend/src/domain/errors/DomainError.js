@@ -17,4 +17,22 @@ class InvalidCredentialsError extends domainError {
   }
 }
 
-module.exports = { domainError, EmailAlreadyExistsError, InvalidCredentialsError }
+class VocalNotFoundError extends domainError {
+  constructor(){
+    super('vocab not found')
+  }
+}
+
+class VocabSlugAlreadyExistsError extends domainError {
+  constructor(slug) {
+    super(' word "${slug}" is existed in list ')
+
+  }
+}
+
+class ForbiddenVocabAccessError extends domainError {
+  constructor() {
+    super (' not you thao tác với word this')
+  }
+}
+module.exports = { domainError, EmailAlreadyExistsError, InvalidCredentialsError, VocabSlugAlreadyExistsError, VocalNotFoundError, ForbiddenVocabAccessError }

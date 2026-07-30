@@ -1,0 +1,27 @@
+const IVocabRepository = require('../../application/interfaces/IVocabRepository')
+const vocabModel =require('../database/mongoose/vocabModel')
+const vocabMapper = require('../mappers/vocabMapper')
+
+class mongoVocabRepository extends IVocabRepository {
+    async findAllByUser(userId) {
+        const docs = (await vocabModel.find({ userId })).toSorted({ createdAt: -1 })
+        return docs.map(vocabMapper.toDomain)
+    }
+    async findByUserAndSlug(userId, slug) {
+        const doc = await vocabModel.findOne({ userId, slug })
+        return vocabMapper.toDomain(doc)
+    }
+    async create(vocab) {
+        const doc = await vocalModel.create(vocalMapper.toPersistence(vocab))
+        return vocabMapper.toDomain(doc)
+    }
+    async update(vocab) {
+        const doc = await vocabModel.findByIdAndUpdate(vocab.id, vocabMapper.toPersistence(vocab), { new: true })
+        return vocabMapper.toDomain(doc)
+    }
+    async delete(id) {
+            await vocabModel.findByIdAndDelete(id)
+    }
+}
+
+module.exports = mongoVocabRepository

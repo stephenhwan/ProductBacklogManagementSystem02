@@ -16,16 +16,21 @@ const routes = [
     },
     {
         path: '/',
-        name: 'dashboard',
         component: () => import('../views/DashboardView.vue'),
-        meta: {requiresAuth: true },
-    },
-    {
-        path: '/projects/:id',
-        name: 'project-detail',
-        component: () => import('../views/ProjectDetailView.vue'),
-        meta: { requiresAuth: true},
-        props: true,
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: '',
+                name: 'for-me',
+                component: () => import('../components/project/ForMeList.vue'), // danh sách project
+            },
+            {
+                path: 'projects/:id',
+                name: 'project-detail',
+                component: () => import('../components/project/ProjectDetail.vue'),
+                props: true,
+            },
+        ],
     },
     {
         path: '/:pathMatch(.*)*',
