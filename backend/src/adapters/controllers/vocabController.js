@@ -1,22 +1,23 @@
-const { createVocabCommand} = require('../application/services/vocab/commands/createVocabCommand')
-const { updateVocabCommand} = require('../application/services/vocab/commands/updateVocabCommand')
-const { deleteVocabCommand} = require('../application/services/vocab/commands/deleteVocabCommand')
-const { listVocabQuery} = require('../application/services/vocab/queries/listVocabQuery')
-const { getVocabBySlugQuery} =require('../application/services/vocab/queries/getVocabBySlugQuery')
+const { createVocabCommand } = require('../../application/services/vocab/commands/createVocabCommand')
+const { updateVocabCommand } = require('../../application/services/vocab/commands/updateVocabCommand')
+const { deleteVocabCommand } = require('../../application/services/vocab/commands/deleteVocabCommand')
+const { listVocabQuery } = require('../../application/services/vocab/queries/listVocabQuery')
+const { getVocabBySlugQuery } = require('../../application/services/vocab/queries/getVocabBySlugQuery')
 
 class vocabController {
-    constructor({
-        createVocabCommand, 
-        updateVocabCommand, 
-        deleteVocabCommand, 
-        listVocabQuery,
-        getVocabBySlugQuery
-    }){
-        this.createVocabCommand = createVocabCommand
-        this.updateVocabCommand = updateVocabCommand
-        this.deleteVocabCommand = deleteVocabCommand
-        this.listVocabQuery = listVocabQuery
-        this.getVocabBySlugQuery = getVocabBySlugQuery
+
+    constructor(
+        createVocabHandler,
+        updateVocabHandler,
+        deleteVocabHandler,
+        listVocabHandler,
+        getVocabBySlugHandler
+    ){
+        this.createVocabHandler = createVocabHandler
+        this.updateVocabHandler = updateVocabHandler
+        this.deleteVocabHandler = deleteVocabHandler
+        this.listVocabHandler = listVocabHandler
+        this.getVocabBySlugHandler = getVocabBySlugHandler
 
         this.create = this.create.bind(this)
         this.update = this.update.bind(this)
@@ -28,10 +29,10 @@ class vocabController {
     async create(req, res, next) {
         try {
             const { firstLanguage, secondLanguage, definition } = req.body
-            const command = new createVocabCommand({ userId: req.userId}, firstLanguage, secondLanguage, definition)
+            const command = new createVocabCommand({ userId: req.userId, firstLanguage, secondLanguage, definition })
             const result = await this.createVocabHandler.execute(command)
             return res.status(201).json(result)
-        } catch(error) {
+        } catch(err) {
             return next(err)
         }
     }
