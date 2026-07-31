@@ -4,7 +4,7 @@ const vocabMapper = require('../mappers/vocabMapper')
 
 class mongoVocabRepository extends IVocabRepository {
     async findAllByUser(userId) {
-        const docs = (await vocabModel.find({ userId })).toSorted({ createdAt: -1 })
+        const docs = (await vocabModel.find({ userId })).sort({ createdAt: -1 })
         return docs.map(vocabMapper.toDomain)
     }
     async findByUserAndSlug(userId, slug) {
@@ -12,7 +12,7 @@ class mongoVocabRepository extends IVocabRepository {
         return vocabMapper.toDomain(doc)
     }
     async create(vocab) {
-        const doc = await vocalModel.create(vocalMapper.toPersistence(vocab))
+        const doc = await vocabModel.create(vocabMapper.toPersistence(vocab))
         return vocabMapper.toDomain(doc)
     }
     async update(vocab) {

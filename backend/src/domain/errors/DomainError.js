@@ -17,7 +17,7 @@ class InvalidCredentialsError extends domainError {
   }
 }
 
-class VocalNotFoundError extends domainError {
+class VocabNotFoundError extends domainError {
   constructor(){
     super('vocab not found')
   }
@@ -35,4 +35,4 @@ class ForbiddenVocabAccessError extends domainError {
     super (' not you thao tác với word this')
   }
 }
-module.exports = { domainError, EmailAlreadyExistsError, InvalidCredentialsError, VocabSlugAlreadyExistsError, VocalNotFoundError, ForbiddenVocabAccessError }
+module.exports = { domainError, EmailAlreadyExistsError, InvalidCredentialsError, VocabSlugAlreadyExistsError, VocabNotFoundError, ForbiddenVocabAccessError }

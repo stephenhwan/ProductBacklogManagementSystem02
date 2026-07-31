@@ -1,4 +1,8 @@
-const { domainError, EmailAlreadyExistsError, InvalidCredentialsError } = require('../../../domain/errors/domainError')
+const { domainError, 
+        EmailAlreadyExistsError, 
+        InvalidCredentialsError,
+        VocabNotFoundError,
+        VocabSlugAlreadyExistsError, } = require('../../../domain/errors/domainError')
 
 /**
  * Middleware xử lý lỗi tập trung (đặt cuối cùng trong app.js).
@@ -15,7 +19,12 @@ function errorHandler(err, req, res, next) {
   if (err instanceof InvalidCredentialsError) {
     return res.status(401).json({ message: err.message })
   }
-
+    if (err instanceof VocabNotFoundError) {
+    return res.status(404).json({ message: err.message })
+  }
+  if (err instanceof VocabSlugAlreadyExistsError) {
+    return res.status(400).json({ message: err.message })
+  }
   if (err instanceof domainError) {
     return res.status(400).json({ message: err.message })
   }

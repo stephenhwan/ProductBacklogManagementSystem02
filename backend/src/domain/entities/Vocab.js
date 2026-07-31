@@ -6,8 +6,8 @@ class Vocab {
         secondLanguage,
         definition,
         slug,
-        createAt,
-        updateAt
+        createdAt,
+        updatedAt
 
     }){
         this.id = id
@@ -16,9 +16,9 @@ class Vocab {
         this.secondLanguage = secondLanguage
         this.definition = definition
         this.slug = slug 
-        this.createAt = createAt
-        this.updateAt = updateAt
+        this.createdAt = createdAt
+        this.updatedAt = updatedAt
     }
 }
 
-module.export = Vocab
+module.exports = Vocab
