@@ -1,4 +1,8 @@
+<script setup>
+import { useAuthStore } from '../../stores/authStore'
+</script>
 
+const authStore = useAuthStore()
 <template>
   <aside class="bg-dark min-vh-100" style="width: 220px">
     <div class="list-group list-group-flush">
@@ -16,6 +20,16 @@
         >
          English - Japanese
       </RouterLink> 
+      <RouterLink
+        v-if ="authStore.isAdmin"
+        :to = "({name: 'word-test'})"
+                class="list-group-item list-group-item-action bg-dark text-light border-secondary"
+        active-class="active"
+        >
+         Test Page (Admin)
+      </RouterLink>
+
+
       
     </div>
   </aside>

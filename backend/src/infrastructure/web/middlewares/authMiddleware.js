@@ -22,4 +22,12 @@ function authMiddleware(tokenService) {
   }
 }
 
+function requireRole(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.userId || !allowedRoles.includes(req.userRole)) {
+      return res.status(403).json({ message: 'Yêu cầu xác thực trước khi sử dụng chức năng này.' })
+    }
+  }
+}
 module.exports = authMiddleware
+module.exports.requireRole = requireRole

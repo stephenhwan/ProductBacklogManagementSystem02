@@ -62,6 +62,7 @@ class vocabController {
             const { firstLanguage, secondLanguage, definition } = req.body
             const command = new updateVocabCommand({
                 userId: req.userId,
+                role: req.userRole,
                 currentSlug: req.params.slug,
                 firstLanguage,
                 secondLanguage,
@@ -76,7 +77,7 @@ class vocabController {
 
     async delete( req, res, next) {
         try {
-            const command = new deleteVocabCommand({ userId: req.userId, slug: req.params.slug})
+            const command = new deleteVocabCommand({ userId: req.userId, role: req.userRole, slug: req.params.slug})
             await this.deleteVocabHandler.execute(command)
             return res.status(204).send()
         } catch (err) {

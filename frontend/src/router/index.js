@@ -33,6 +33,7 @@ const routes = [
                 path: 'words/test',
                 name: 'word-test',
                 component: () => import('../components/word/WordTest.vue'), 
+                meta: { roles: ['admin']},
             },
             {
                 path: 'words/create',

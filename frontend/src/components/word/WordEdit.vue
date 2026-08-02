@@ -22,6 +22,10 @@ onMounted(async () => {
   isLoading.value = true
   try {
     const vocab = await VocabService.getBySlug(props.slug)
+    if (!authStore.isAdmin && vocab.userId !== authStore.user.id) {
+      forbidden.value = true
+      return
+    }
     firstLanguage.value = vocab.firstLanguage
     secondLanguage.value = vocab.secondLanguage
     definition.value = vocab.definition
@@ -55,7 +59,11 @@ async function onSubmit() {
     <h1 class="h3 mb-4">Edit Word</h1>
 
     <p v-if="isLoading" class="text-muted">Loading...</p>
-
+    
+    <div v-else-if="forbidden" class="alert alert-danger">
+      Bạn không có quyền sửa từ này (chỉ chủ sở hữu hoặc admin mới được sửa).
+    </div>
+    
     <form v-else @submit.prevent="onSubmit">
       <div class="mb-3">
         <label class="form-label">First Language</label>

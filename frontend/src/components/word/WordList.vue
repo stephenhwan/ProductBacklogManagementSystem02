@@ -14,6 +14,10 @@ function goToCreate() {
     router.push({ name: 'word-create' })
 }
 
+function canManage (vocab) {
+    return authStore.isAdmin || authStore.userId === authStore.currentUserId
+}
+
 function goToDetail(slug) {
     router.push({ name: 'word-detail', params: { slug } })
 }
@@ -80,12 +84,14 @@ async function onDelete(slug) {
                                     <button class="btn btn-sm btn-outline-info me-2" @click="goToDetail(vocab.slug)">
                                         Show
                                     </button>
-                                    <button class="btn btn-sm btn-outline-primary me-2" @click="goToEdit(vocab.slug)">
-                                        Edit
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" @click="onDelete(vocab.slug)">
-                                        Delete
-                                    </button>
+                                    <template v-if="canManage(vocab)">
+                                        <button class="btn btn-sm btn-outline-primary me-2" @click="goToEdit(vocab.slug)">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" @click="onDelete(vocab.slug)">
+                                            Delete
+                                        </button>
+                                    </template>
                                 </td>
                             </tr>
                         </tbody>

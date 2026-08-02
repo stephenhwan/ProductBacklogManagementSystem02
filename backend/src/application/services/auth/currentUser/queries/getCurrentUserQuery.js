@@ -19,7 +19,7 @@ class getCurrentUserHandler {
       throw new InvalidCredentialsError() // token hợp lệ nhưng user đã bị xoá
     }
 
-    return { id: user.id, fullName: user.fullName, email: user.email }
+    return { id: user.id, fullName: user.fullName, email: user.email, role: user.role }
   }
 }
 

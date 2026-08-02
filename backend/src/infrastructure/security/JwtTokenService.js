@@ -2,10 +2,7 @@ const jwt = require('jsonwebtoken')
 const ITokenService = require('../../application/interfaces/ITokenService')
 
 class JwtTokenService extends ITokenService {
-  /**
-   * @param {string} secret - đọc từ biến môi trường, KHÔNG hardcode
-   * @param {string} expiresIn - vd: '2h'
-   */
+  
   constructor(secret, expiresIn = '2h') {
     super()
     if (!secret) {
@@ -18,7 +15,7 @@ class JwtTokenService extends ITokenService {
   generate(user) {
     // payload gọn nhẹ, không nhét passwordHash vào token
     return jwt.sign(
-      { sub: user.id, email: user.email, fullName: user.fullName },
+      { sub: user.id, email: user.email, fullName: user.fullName, role: user.role },
       this.secret,
       { expiresIn: this.expiresIn },
     )

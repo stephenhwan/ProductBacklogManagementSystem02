@@ -2,7 +2,8 @@ const { domainError,
         EmailAlreadyExistsError, 
         InvalidCredentialsError,
         VocabNotFoundError,
-        VocabSlugAlreadyExistsError, } = require('../../../domain/errors/domainError')
+        VocabSlugAlreadyExistsError,
+        ForbiddenVocabAccessError } = require('../../../domain/errors/domainError')
 
 /**
  * Middleware xử lý lỗi tập trung (đặt cuối cùng trong app.js).
@@ -24,6 +25,9 @@ function errorHandler(err, req, res, next) {
   }
   if (err instanceof VocabSlugAlreadyExistsError) {
     return res.status(400).json({ message: err.message })
+  }
+  if (err instanceof ForbiddenVocabAccessError) {
+  return res.status(403).json({ message: err.message })
   }
   if (err instanceof domainError) {
     return res.status(400).json({ message: err.message })

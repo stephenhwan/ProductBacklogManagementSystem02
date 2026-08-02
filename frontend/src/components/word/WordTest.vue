@@ -72,7 +72,7 @@ async function testDelete() {
 
 <template>
   <div>
-    <h1>VOCAB CRUD TEST PAGE (raw, không CSS)</h1>
+    <h1>VOCAB CRUD TEST PAGE</h1>
 
     <hr />
 

@@ -49,7 +49,7 @@ class registerHandler {
 
     // Không bao giờ trả passwordHash ra ngoài
     return {
-      user: { id: savedUser.id, fullName: savedUser.fullName, email: savedUser.email },
+      user: { id: savedUser.id, fullName: savedUser.fullName, email: savedUser.email, role: savedUser.role },
       token,
     }
   }
