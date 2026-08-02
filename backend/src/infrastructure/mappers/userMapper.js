@@ -9,6 +9,7 @@ class userMapper {
       fullName: doc.fullName,
       email: doc.email,
       passwordHash: doc.passwordHash,
+      role: doc.role,  
     })
   }
 
@@ -18,6 +19,7 @@ class userMapper {
       fullName: user.fullName,
       email: user.email,
       passwordHash: user.passwordHash,
+      role: user.role,
     }
   }
 }

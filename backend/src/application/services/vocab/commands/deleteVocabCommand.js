@@ -3,9 +3,11 @@ const { VocabNotFoundError } = require('../../../../domain/errors/domainError')
 class deleteVocabCommand {
     constructor({
         userId,
-        slug
+        slug,
+        role
     }){
         this.userId = userId
+        this.role = role
         this.slug = slug
     }
 }
@@ -19,6 +21,11 @@ class deleteVocabHandler {
         if(!vocab)
         {
             throw new VocabNotFoundError()
+        }
+        const isOwner = vocab.userId === command.userId
+        const isAdmin = command.role === 'admin'
+        if (!isOwner && !isAdmin) {
+            throw new ForbiddenVocabAccessError()
         }
         await this.vocabRepository.delete(vocab.id)
     }

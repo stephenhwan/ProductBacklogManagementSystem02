@@ -14,7 +14,9 @@ function authMiddleware(tokenService) {
 
     try {
       const payload = tokenService.verify(token)
-      req.userId = payload.sub // gán lại cho controller dùng ở req.userId
+      req.userId = payload.sub 
+      req.userRole = payload.role
+  
       return next()
     } catch {
       return res.status(401).json({ message: 'Token không hợp lệ hoặc đã hết hạn.' })
@@ -27,6 +29,7 @@ function requireRole(...allowedRoles) {
     if (!req.userId || !allowedRoles.includes(req.userRole)) {
       return res.status(403).json({ message: 'Yêu cầu xác thực trước khi sử dụng chức năng này.' })
     }
+    return next()
   }
 }
 module.exports = authMiddleware

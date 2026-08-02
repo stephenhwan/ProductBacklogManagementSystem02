@@ -13,7 +13,7 @@ class getVocabBySlugHandler {
     }
 
     async execute(query) {
-        const vocab = await this.vocabRepository.findByUserAndSlug(query.userId, query.slug)
+        const vocab = await this.vocabRepository.findBySlug(query.slug)
         if(!vocab) {
             throw new VocabNotFoundError()
         }

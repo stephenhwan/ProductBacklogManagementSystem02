@@ -11,7 +11,7 @@ class listVocabHandler {
     }
 
     async execute(query) {
-        return await this.vocabRepository.findAllByUser(query.userId)
+        return await this.vocabRepository.findAll()
     }
 }
 

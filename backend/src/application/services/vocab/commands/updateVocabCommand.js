@@ -34,7 +34,7 @@ class updateVocabHandler {
         const newSlug = slugify(command.firstLanguage)
 
         if (newSlug !== vocab.slug) {
-            const clash = await this.vocabRepository.findByUserAndSlug(command.userId, newSlug )
+            const clash = await this.vocabRepository.findByUserAndSlug(vocab.userId, newSlug)
             if (clash) {
             throw new VocabSlugAlreadyExistsError(newSlug)
             }

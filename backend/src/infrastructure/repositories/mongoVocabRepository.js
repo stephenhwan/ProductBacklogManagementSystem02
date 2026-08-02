@@ -3,6 +3,10 @@ const vocabModel =require('../database/mongoose/vocabModel')
 const vocabMapper = require('../mappers/vocabMapper')
 
 class mongoVocabRepository extends IVocabRepository {
+    async findAll() {
+        const docs = await vocabModel.find({}).sort({ createdAt: -1 })
+        return docs.map(vocabMapper.toDomain)
+    }
     async findAllByUser(userId) {
         const docs = await vocabModel.find({ userId }).sort({ createdAt: -1 })
         return docs.map(vocabMapper.toDomain)
