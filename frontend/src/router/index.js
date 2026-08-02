@@ -30,9 +30,25 @@ const routes = [
                 component: () => import('../components/word/WordList.vue'),
             },
             {
+                path: 'words/test',
+                name: 'word-test',
+                component: () => import('../components/word/WordTest.vue'), 
+            },
+            {
+                path: 'words/create',
+                name: 'word-create',
+                component: () => import('../components/word/WordCreate.vue'),
+            },
+            {
                 path: 'words/:slug',
                 name: 'word-detail',
                 component: () => import('../components/word/WordDetail.vue'),
+                props: true,
+            },
+            {
+                path: 'words/:slug/edit',
+                name: 'word-edit',
+                component: () => import('../components/word/WordEdit.vue'),
                 props: true,
             },
         ],

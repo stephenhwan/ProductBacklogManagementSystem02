@@ -15,5 +15,13 @@ export const VocabService = {
         const { data } = await apiClient.post('/vocabs', payload)
         return data
     },
+    async delete(slug) {
+        await apiClient.delete(`/vocabs/${slug}`)
+    },
+    async update(currentSlug, payload) {
+        const { data } = await apiClient.put(`/vocabs/${currentSlug}`, payload )
+        return data 
+    },
+
 }
 export default VocabService
