@@ -22,13 +22,12 @@ const routes = [
             {
                 path: '',
                 name: 'for-me',
-                component: () => import('../components/project/ForMeList.vue'), // danh sách project
+                component: () => import('../components/home/home.vue'), // danh sách project
             },
             {
-                path: 'projects/:id',
-                name: 'project-detail',
-                component: () => import('../components/project/ProjectDetail.vue'),
-                props: true,
+                path: 'words',
+                name: 'words-list',
+                component: () => import('../components/word/WordList.vue'),
             },
         ],
     },
