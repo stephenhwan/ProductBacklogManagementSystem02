@@ -12,5 +12,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <RouterView />
+  <div v-if="authStore.isReady">
+    <router-view />
+  </div>
+  
+  <!-- Hiển thị màn hình loading chờ đợi -->
+  <div v-else class="text-center mt-5">
+    Loading app...
+  </div>
 </template>

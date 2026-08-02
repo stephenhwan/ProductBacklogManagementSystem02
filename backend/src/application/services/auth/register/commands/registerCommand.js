@@ -12,23 +12,13 @@ class registerCommand {
   }
 }
 
-/**
- * RegisterHandler - logic đăng ký thật.
- * Phụ thuộc vào 3 interface (không phụ thuộc Mongoose, bcrypt, jsonwebtoken trực tiếp).
- */
 class registerHandler {
-  /**
-   * @param {import('../../../interfaces/IUserRepository')} userRepository
-   * @param {import('../../../interfaces/IPasswordHasher')} passwordHasher
-   * @param {import('../../../interfaces/ITokenService')} tokenService
-   */
   constructor(userRepository, passwordHasher, tokenService) {
     this.userRepository = userRepository
     this.passwordHasher = passwordHasher
     this.tokenService = tokenService
   }
 
-  /** @param {registerCommand} command */
   async execute(command) {
     const existing = await this.userRepository.findByEmail(command.email)
     if (existing) {

@@ -10,6 +10,8 @@ const props = defineProps({
 
 const router = useRouter()
 const vocabStore = useVocabStore()
+const authStore = useVocabStore()
+const forbidden = ref(false)
 
 const firstLanguage = ref('')
 const secondLanguage = ref('')
@@ -22,7 +24,10 @@ onMounted(async () => {
   isLoading.value = true
   try {
     const vocab = await VocabService.getBySlug(props.slug)
-    if (!authStore.isAdmin && vocab.userId !== authStore.user.id) {
+    console.log("Quyền Admin:", authStore.isAdmin)
+    console.log("ID của người tạo từ (vocab.userId):", vocab.userId)
+    console.log("ID của bạn (authStore.currentUserId):", authStore.currentUserId)
+    if (!authStore.isAdmin && vocab.userId !== authStore.currentUserId) {
       forbidden.value = true
       return
     }
