@@ -7,7 +7,7 @@ export const VocabService = {
     },
 
     async getBySlug(slug) {
-        const { data } = await apiClient.get('/vocabs/${slug}') 
+        const { data } = await apiClient.get(`/vocabs/${slug}`)
         return data
     },
 

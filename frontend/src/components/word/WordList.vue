@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { onMounted} from 'vue'
 import { useVocabStore } from '../../stores/vocabStore'
 
@@ -22,7 +22,7 @@ onMounted( () => {
             <RouterLink
                 v-for="vocab in vocabStore.vocabs"
                 :key="vocab.id"
-                :to="{ name: 'word-detail', params: { slug: vocab.slug } }"
+                :to="{ name: 'word-list', params: { slug: vocab.slug } }"
                 class="list-group-item list-group-item-action"
             >
                 <strong>{{ vocab.firstLanguage }}</strong> — {{ vocab.secondLanguage }}

@@ -29,6 +29,12 @@ const routes = [
                 name: 'words-list',
                 component: () => import('../components/word/WordList.vue'),
             },
+            {
+                path: 'words/:slug',
+                name: 'word-detail',
+                component: () => import('../components/word/WordDetail.vue'),
+                props: true,
+            },
         ],
     },
     {
