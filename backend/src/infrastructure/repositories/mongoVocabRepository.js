@@ -15,6 +15,10 @@ class mongoVocabRepository extends IVocabRepository {
         const doc = await vocabModel.findOne({ userId, slug })
         return vocabMapper.toDomain(doc)
     }
+    async findBySlug(slug) {
+        const doc = await vocabModel.findOne({ slug })
+        return vocabMapper.toDomain(doc)
+    }
     async create(vocab) {
         const doc = await vocabModel.create(vocabMapper.toPersistence(vocab))
         return vocabMapper.toDomain(doc)

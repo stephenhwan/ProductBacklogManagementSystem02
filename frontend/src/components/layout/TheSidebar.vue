@@ -1,8 +1,10 @@
 <script setup>
 import { useAuthStore } from '../../stores/authStore'
-</script>
 
 const authStore = useAuthStore()
+</script>
+
+
 <template>
   <aside class="bg-dark min-vh-100" style="width: 220px">
     <div class="list-group list-group-flush">

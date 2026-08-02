@@ -1,4 +1,4 @@
-const { VocabNotFundError , VocabSlugAlreadyExistsError } = require('../../../../domain/errors/domainError')
+const { VocabNotFoundError , VocabSlugAlreadyExistsError } = require('../../../../domain/errors/domainError')
 
 
 const slugify = require ('../../../../shared/slugify')
@@ -29,7 +29,7 @@ class updateVocabHandler {
     async execute(command) {
         const vocab = await this.vocabRepository.findByUserAndSlug(command.userId, command.currentSlug)
         if (!vocab) {
-            throw new VocabNotFundError()
+            throw new VocabNotFoundError()
         }
         const newSlug = slugify(command.firstLanguage)
 

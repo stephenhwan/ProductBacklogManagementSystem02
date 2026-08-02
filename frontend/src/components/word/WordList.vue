@@ -2,7 +2,8 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVocabStore } from '../../stores/vocabStore'
-
+import { useAuthStore } from '../../stores/authStore'
+const authStore = useAuthStore()
 const vocabStore = useVocabStore()
 const router = useRouter()
 
@@ -15,7 +16,7 @@ function goToCreate() {
 }
 
 function canManage (vocab) {
-    return authStore.isAdmin || authStore.userId === authStore.currentUserId
+    return authStore.isAdmin || vocab.userId === authStore.currentUserId
 }
 
 function goToDetail(slug) {
