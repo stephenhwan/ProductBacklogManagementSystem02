@@ -1,11 +1,14 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVocabStore } from '../../stores/vocabStore'
 import { useAuthStore } from '../../stores/authStore'
 const authStore = useAuthStore()
 const vocabStore = useVocabStore()
 const router = useRouter()
+
+// slug đang chờ xác nhận xóa (thay cho window.confirm bị chặn trong iframe/preview)
+const pendingDeleteSlug = ref(null)
 
 onMounted(() => {
     vocabStore.fetchAll()
@@ -27,16 +30,22 @@ function goToEdit(slug) {
     router.push({ name: 'word-edit', params: { slug } })
 }
 
-async function onDelete(slug) {
-    if (confirm(`Are you sure you want to delete "${slug}"?`)) {
-        await vocabStore.deleteVocab(slug)
-    }
+function askDelete(slug) {
+    pendingDeleteSlug.value = slug
+}
+
+function cancelDelete() {
+    pendingDeleteSlug.value = null
+}
+
+async function confirmDelete(slug) {
+    await vocabStore.deleteVocab(slug)
+    pendingDeleteSlug.value = null
 }
 </script>
 
 <template>
     <div class="container my-4">
-        <!-- Phần Header: Tiêu đề và Nút thêm -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-0 text-primary fw-bold">Word List</h1>
             <button class="btn btn-primary shadow-sm" @click="goToCreate">
@@ -44,7 +53,6 @@ async function onDelete(slug) {
             </button>
         </div>
 
-        <!-- Trạng thái Loading -->
         <div v-if="vocabStore.isLoading" class="text-center my-5">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
@@ -52,18 +60,15 @@ async function onDelete(slug) {
             <p class="text-muted mt-2">Loading vocabularies...</p>
         </div>
 
-        <!-- Trạng thái Lỗi -->
         <div v-else-if="vocabStore.error" class="alert alert-danger shadow-sm" role="alert">
             {{ vocabStore.error }}
         </div>
 
-        <!-- Trạng thái Trống (Không có dữ liệu) -->
         <div v-else-if="vocabStore.vocabs.length === 0" class="text-center my-5 p-5 bg-light rounded-3 shadow-sm">
             <h5 class="text-muted mb-3">No words available yet.</h5>
             <button class="btn btn-outline-primary" @click="goToCreate">Create your first word</button>
         </div>
 
-        <!-- Bảng Dữ Liệu -->
         <div v-else class="card shadow-sm border-0">
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -89,9 +94,23 @@ async function onDelete(slug) {
                                         <button class="btn btn-sm btn-outline-primary me-2" @click="goToEdit(vocab.slug)">
                                             Edit
                                         </button>
-                                        <button class="btn btn-sm btn-outline-danger" @click="onDelete(vocab.slug)">
+
+                                        <button
+                                            v-if="pendingDeleteSlug !== vocab.slug"
+                                            class="btn btn-sm btn-outline-danger"
+                                            @click="askDelete(vocab.slug)"
+                                        >
                                             Delete
                                         </button>
+
+                                        <template v-else>
+                                            <button class="btn btn-sm btn-danger me-1" @click="confirmDelete(vocab.slug)">
+                                                Confirm Delete
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" @click="cancelDelete">
+                                                cancel
+                                            </button>
+                                        </template>
                                     </template>
                                 </td>
                             </tr>

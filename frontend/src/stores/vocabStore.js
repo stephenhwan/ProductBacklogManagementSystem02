@@ -20,6 +20,17 @@ export const useVocabStore = defineStore('vocab', {
                 this.isLoading = false
             }
         },
+        async fetchByUserId(userId) {
+            this.isLoading = true
+            this.error = null
+            try {
+                this.vocabs = await WordService.getByUserId(userId)
+            } catch (error) {
+                this.error = error.message || 'Failed to fetch vocabs'
+            } finally {
+                this.isLoading = false
+            }
+        },
         async createVocab(payload) {
             this.error = null
             try {

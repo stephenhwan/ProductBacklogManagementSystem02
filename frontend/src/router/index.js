@@ -36,6 +36,11 @@ const routes = [
                 meta: { roles: ['admin']},
             },
             {
+                path: 'words/quiz',
+                name: 'word-quiz',
+                component: () => import('../components/word/Quiz.vue'),
+            },
+            {
                 path: 'words/create',
                 name: 'word-create',
                 component: () => import('../components/word/WordCreate.vue'),

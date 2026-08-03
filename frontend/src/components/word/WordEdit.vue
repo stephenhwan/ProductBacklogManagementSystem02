@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVocabStore } from '../../stores/vocabStore'
 import VocabService from '../../services/vocabService'
+import { useAuthStore } from '../../stores/authStore'
 
 const props = defineProps({
   slug: { type: String, required: true },
@@ -10,7 +11,7 @@ const props = defineProps({
 
 const router = useRouter()
 const vocabStore = useVocabStore()
-const authStore = useVocabStore()
+const authStore = useAuthStore()
 const forbidden = ref(false)
 
 const firstLanguage = ref('')
@@ -24,9 +25,9 @@ onMounted(async () => {
   isLoading.value = true
   try {
     const vocab = await VocabService.getBySlug(props.slug)
-    console.log("Quyền Admin:", authStore.isAdmin)
-    console.log("ID của người tạo từ (vocab.userId):", vocab.userId)
-    console.log("ID của bạn (authStore.currentUserId):", authStore.currentUserId)
+  console.log("Quyền Admin:", authStore.isAdmin)
+  console.log("ID của người tạo từ (vocab.userId):", vocab.userId)
+  console.log("ID của bạn (authStore.currentUserId):", authStore.currentUserId)
     if (!authStore.isAdmin && vocab.userId !== authStore.currentUserId) {
       forbidden.value = true
       return
