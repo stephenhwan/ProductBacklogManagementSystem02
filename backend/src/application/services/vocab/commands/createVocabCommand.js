@@ -26,7 +26,7 @@ const slugify = require ('../../../../shared/slugify')
             const existing = await this.vocabRepository.findByUserAndSlug(command.userId, slug) 
 
             if (existing) 
-                throw new VocabSlugArlreadyExistsError(slug)
+                throw new VocabSlugAlreadyExistsError(slug)
 
             const newVocab = new Vocab ({
                 id: null,

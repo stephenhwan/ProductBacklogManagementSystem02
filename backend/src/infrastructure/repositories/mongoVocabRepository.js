@@ -3,9 +3,13 @@ const vocabModel =require('../database/mongoose/vocabModel')
 const vocabMapper = require('../mappers/vocabMapper')
 
 class mongoVocabRepository extends IVocabRepository {
-    async findAll() {
-        const docs = await vocabModel.find({}).sort({ createdAt: -1 })
-        return docs.map(vocabMapper.toDomain)
+    async findAll({ page = 1, limit = 5 } = {}) {
+        const skip = (page - 1) * limit
+        const [docs, total] = await Promise.all([
+            vocabModel.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            vocabModel.countDocuments({}),
+        ])
+        return { items: docs.map(vocabMapper.toDomain), total, page, limit }
     }
     async findAllByUser(userId) {
         const docs = await vocabModel.find({ userId }).sort({ createdAt: -1 })

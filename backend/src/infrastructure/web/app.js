@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-
+// const compression = require('compression')
 // domain/application đều được "ráp" ở đây — đây là nơi duy nhất trong app
 // biết tới TẤT CẢ các lớp (Mongo, bcrypt, jwt, Express).
 const connectDB = require('../database/db')
@@ -68,6 +68,7 @@ async function createApp() {
   const app = express()
   app.use(cors({ origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173' }))
   app.use(express.json())
+  // app.use(compression())
 
   app.use('/api/auth', createAuthRoutes(AuthController, authMiddlewareInstance))
   app.use('/api/vocabs', createVocabRoutes(VocabController, authMiddlewareInstance))

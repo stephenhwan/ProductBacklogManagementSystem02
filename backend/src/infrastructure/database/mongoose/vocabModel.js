@@ -11,6 +11,6 @@ const vocabSchema = new mongoose.Schema(
     { timestamps: true },
 )
 
-vocabSchema.index({ userId: 1, slug: 1}, {unique:true})
+vocabSchema.index({ userId: 1, createdAt: -1 })
 
 module.exports = mongoose.model('Vocab', vocabSchema)

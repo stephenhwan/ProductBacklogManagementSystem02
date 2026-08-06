@@ -101,5 +101,6 @@ function displayResults() {
         </li>
       </ul>
     </div>
+    
   </div>
 </template>

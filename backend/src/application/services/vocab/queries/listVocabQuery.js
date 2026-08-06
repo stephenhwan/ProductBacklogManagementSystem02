@@ -1,6 +1,8 @@
 class listVocabQuery {
-    constructor({userId}) {
+    constructor({userId, page, limit }) {
         this.userId = userId
+        this.page = page
+        this.limit = limit
     }
 }
 
@@ -11,7 +13,7 @@ class listVocabHandler {
     }
 
     async execute(query) {
-        return await this.vocabRepository.findAll()
+        return await this.vocabRepository.findAll({ page: query.page, limit: query.limit })
     }
 }
 

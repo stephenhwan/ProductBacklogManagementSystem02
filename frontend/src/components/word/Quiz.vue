@@ -21,9 +21,9 @@
         <div class="container my-4" style="max-width: 600px;">
             <h1 class="h3 mb-4 text-primary fw-bold">Test Your Vocabulary</h1>
              <div v-if="vocabStore.isLoading" class="text-center my-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         
             <div v-else-if="vocabStore.error" class="alert alert-danger">

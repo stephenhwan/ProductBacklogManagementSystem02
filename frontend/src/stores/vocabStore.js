@@ -5,28 +5,20 @@ import WordService from '../services/vocabService'
 export const useVocabStore = defineStore('vocab', {
     state: () => ({
         vocabs: [],
+        page: 1,
+        limit: 5,
         isLoading: false,
         error: null,
     }),
     actions: {
-        async fetchAll() {
+        async fetchAll(page = 1) {
             this.isLoading = true
             this.error = null
             try {
-                this.vocabs = await WordService.getAll()
-            } catch (error) {
-                this.error = error.message || 'Failed to fetch vocabs'
-            } finally {
-                this.isLoading = false
-            }
-        },
-        async fetchByUserId(userId) {
-            this.isLoading = true
-            this.error = null
-            try {
-                this.vocabs = await WordService.getByUserId(userId)
-            } catch (error) {
-                this.error = error.message || 'Failed to fetch vocabs'
+                const { items, total } = await VocabService.getAll({ page, limit: this.limit })
+                this.vocabs = items
+                this.total = total
+                this.page = page
             } finally {
                 this.isLoading = false
             }

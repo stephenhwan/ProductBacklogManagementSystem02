@@ -39,9 +39,11 @@ class vocabController {
 
     async list(req,res,next) {
         try {
-            const query = new listVocabQuery({userId: req.userId})
+            const page = Number(req.query.page) || 1
+            const limit = Number(req.query.limit) || 5
+            const query = new listVocabQuery({ userId: req.userId, page, limit })
             const result = await this.listVocabHandler.execute(query)
-            return res.status(200).json(result)
+            return res.status(200).json(result)   // { items, total, page, limit }
         } catch (err) {
             return next(err)
         }
