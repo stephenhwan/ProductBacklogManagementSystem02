@@ -78,7 +78,7 @@ async function testDelete() {
 
     <!-- ============ R: Read ============ -->
     <h2>1. READ</h2>
-    <button @click="vocabStore.fetchAll()">Fetch lại danh sách</button>
+    <button @click="vocabStore.fetchAll()">Fetch lại danh sách</button> 
 
     <p v-if="vocabStore.isLoading">Đang tải...</p>
     <p v-else-if="vocabStore.error">Lỗi: {{ vocabStore.error }}</p>

@@ -1,8 +1,8 @@
 import apiClient from './apiClient'
 
 export const VocabService = {
-    async getAll() {
-        const { data } = await apiClient.get('/vocabs')
+    async getAll({ page = 1, limit = 5 } = {}) {
+        const { data } = await apiClient.get('/vocabs', { params: { page, limit } })
         return data
     },
 

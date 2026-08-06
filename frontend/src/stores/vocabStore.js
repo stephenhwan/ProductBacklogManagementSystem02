@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import WordService from '../services/vocabService'
+import VocabService from '../services/vocabService'
 
 export const useVocabStore = defineStore('vocab', {
     state: () => ({
@@ -9,6 +9,7 @@ export const useVocabStore = defineStore('vocab', {
         limit: 5,
         isLoading: false,
         error: null,
+        total: 0,
     }),
     actions: {
         async fetchAll(page = 1) {
@@ -26,7 +27,7 @@ export const useVocabStore = defineStore('vocab', {
         async createVocab(payload) {
             this.error = null
             try {
-                const created = await WordService.create(payload)
+                const created = await VocabService.create(payload)
                 this.vocabs.push(created)
                 return created
             } catch (error) {
@@ -36,7 +37,7 @@ export const useVocabStore = defineStore('vocab', {
         },
         async deleteVocab(slug) {
             try {
-                await WordService.delete(slug)
+                await VocabService.delete(slug)
                 this.vocabs = this.vocabs.filter(v => v.slug !== slug)
             } catch (error) {
                 this.error = error.message || 'Failed to delete vocab'
@@ -45,7 +46,7 @@ export const useVocabStore = defineStore('vocab', {
         async updateVocab(currentSlug, payload) {
             this.error = null
             try {
-                const updated = await WordService.update(currentSlug, payload)
+                const updated = await VocabService.update(currentSlug, payload)
                 const index = this.vocabs.findIndex(v => v.slug === currentSlug)
                 if (index !== -1 ) this.vocabs[index] = updated
                 return updated

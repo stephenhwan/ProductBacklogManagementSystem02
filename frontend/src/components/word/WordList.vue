@@ -42,6 +42,17 @@ async function confirmDelete(slug) {
     await vocabStore.deleteVocab(slug)
     pendingDeleteSlug.value = null
 }
+function nextPage() {
+    if (vocabStore.page * vocabStore.limit < vocabStore.total) {
+        vocabStore.fetchAll(vocabStore.page + 1)
+    }
+}
+
+function prevPage() {
+    if (vocabStore.page > 1) {
+        vocabStore.fetchAll(vocabStore.page - 1)
+    }
+}
 </script>
 
 <template>
@@ -116,6 +127,28 @@ async function confirmDelete(slug) {
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top">
+                <span class="text-muted small">
+                    Page {{ vocabStore.page }} / {{ Math.max(1, Math.ceil(vocabStore.total / vocabStore.limit)) }}
+                    ({{ vocabStore.total }} words)
+                </span>
+                <div>   
+                    <button
+                        class="btn btn-sm btn-outline-secondary me-2"
+                        :disabled="vocabStore.page <= 1"
+                        @click="prevPage"
+                    >
+                        ← Back
+                    </button>
+                    <button
+                        class="btn btn-sm btn-outline-secondary"
+                        :disabled="vocabStore.page * vocabStore.limit >= vocabStore.total"
+                        @click="nextPage"
+                    >
+                        Next →
+                    </button>
                 </div>
             </div>
         </div>
